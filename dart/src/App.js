@@ -1,5 +1,5 @@
-import logo from './logo.svg';
 import './App.css';
+import { ScoreTable } from './Modules/points';
 
 function App() {
   return (
@@ -7,6 +7,10 @@ function App() {
       <h1>
         Welcome to Darts!
       </h1>
+      <div style={{ display: 'flex', justifyContent: 'center', alignItems: 
+                  'center', height: '100vh' }}>
+        <ScoreTable />
+      </div>
     </div>
   );
 }
