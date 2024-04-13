@@ -1,5 +1,5 @@
 import './App.css';
-import { ScoreTable } from './Modules/points';
+import { ScoreTable } from './components/points';
 
 function App() {
   return (
