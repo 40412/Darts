@@ -20,7 +20,7 @@ function App() {
     <h1>
     Welcome to Darts!
     </h1>
-    <AppStateContext.Provider value={{appState}}>
+    <AppStateContext.Provider value={{appState, setAppState}}>
     {appState === 'initial state' && (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 
           'center', height: '100vh' }}>

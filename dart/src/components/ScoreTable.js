@@ -1,7 +1,10 @@
 import React, { useContext } from 'react';
 import { GameContext } from '../contexts/GameContext';
+import { AppStateContext } from '../contexts/AppStateContext';
 
 const ScoreTable = () => {
+
+  const { appState, setAppState } = useContext(AppStateContext);
 
   const { state } = useContext(GameContext);
   const { dispatch } = useContext(GameContext);
@@ -10,7 +13,6 @@ const ScoreTable = () => {
   const player2 = state.players[1];
 
   const addPoints = () => {
-    
     const points = document.getElementById('points').value;
     dispatch({ type: 'UPDATE_SCORES', payload: points });
     dispatch({ type: 'SET_CURRENT_PLAYER', payload: state.currentPlayer.name === player1.name ? player2 : player1});
