@@ -1,7 +1,8 @@
 import './App.css';
-import { ScoreTable } from './components/points';
+import { ScoreTable } from './components/ScoreTable.js';
 import { AppStateContext } from './contexts/AppStateContext';
 import { React, useState } from 'react';
+import { GameProvider } from './contexts/GameContext.js';
 
 function App() {
   
@@ -30,7 +31,10 @@ function App() {
     {appState === 'game' && (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 
           'center', height: '100vh' }}>
-      <ScoreTable />
+        <GameProvider>
+          <ScoreTable />
+        </GameProvider>
+        
     </div>
     )}
     {appState === 'summary' && (
