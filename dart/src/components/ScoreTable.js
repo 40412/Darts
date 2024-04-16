@@ -4,24 +4,58 @@ import { AppStateContext } from '../contexts/AppStateContext';
 
 const ScoreTable = () => {
 
-  const { appState, setAppState } = useContext(AppStateContext);
-
-  const { state } = useContext(GameContext);
-  const { dispatch } = useContext(GameContext);
+  const { setAppState } = useContext(AppStateContext);
+  const { state, dispatch } = useContext(GameContext);
 
   const player1 = state.players[0];
   const player2 = state.players[1];
 
+  const legOver = (state, dispatch) => {
+    const winner = state.currentPlayer;
+    const p1Scores = state.players[0].scores;
+    const p2Scores = state.players[1].scores;
+  
+    dispatch({ type: 'SET_WON_LEGS', payload: winner.name });
+    dispatch({
+      type: 'SET_LEGS', payload: {
+        Leg: state.currentLeg,
+        winner: winner.name,
+        scores: { player1: p1Scores, player2: p2Scores }
+      }
+    });
+    window.alert(`Leg won by ${winner.name}`);
+  
+    if (winner.wonLegs < (state.setSize / 2)) {
+      dispatch({ type: 'RESET_SCORES', payload: state.gameType });
+      dispatch({ type: 'SET_CURRENT_LEG', payload: state.currentLeg + 1 })
+    } else {
+      setAppState('summary');
+    }
+  }
+
   const addPoints = () => {
-    const points = document.getElementById('points').value;
+    let points = document.getElementById('points').value;
+    const nextPoints = state.currentPlayer.scores[state.currentPlayer.scores.length - 1] - points;
+
+    if (nextPoints < 2 && nextPoints !== 0) {
+      points = 0;
+    }
+
     dispatch({ type: 'UPDATE_SCORES', payload: points });
-    dispatch({ type: 'SET_CURRENT_PLAYER', payload: state.currentPlayer.name === player1.name ? player2 : player1});
+
+    if (nextPoints === 0) {
+      legOver(state, dispatch);
+    }
+
+    dispatch({ type: 'SET_CURRENT_PLAYER', payload: state.currentPlayer.name === player1.name ? player2 : player1 });
+    document.getElementById('points').value = '';
+    console.log(state);
   }
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', margin: 10 }}>
-      <label htmlFor='points'>Enter points for player: {state.currentPlayer.name}</label>
-        <div style={{padding: 20}}>
+        <label htmlFor='points'>Enter points for player: {state.currentPlayer.name}</label>
+        <div style={{ padding: 20 }}>
           <input type="number" id='points' placeholder="Enter points" />
           <button onClick={() => addPoints()}>
             Add Points</button>

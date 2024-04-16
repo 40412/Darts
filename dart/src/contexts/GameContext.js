@@ -8,7 +8,7 @@ const initialState = {
   setSize: 5,
   currentLeg: 1,
   currentPlayer: {name: 'Kale', scores: [301], wonLegs: 0},
-  wonLegs: [],
+  Legs: [],
 };
 
 // Define the context
@@ -19,6 +19,15 @@ const reducer = (state, action) => {
     switch (action.type) {
       case 'ADD_PLAYER':
         return { ...state, players: [...state.players, action.payload] };
+      case 'SET_WON_LEGS':
+        return { 
+          ...state, players: state.players.map((player) => {
+            if (player.name === action.payload) {
+              return { ...player, wonLegs: player.wonLegs + 1 };
+            }
+            return player;
+          }) 
+        };
       case 'UPDATE_SCORES':
         return { 
           ...state, players: state.players.map((player) => {
@@ -31,6 +40,12 @@ const reducer = (state, action) => {
             return player;
           }) 
         };
+      case 'RESET_SCORES':
+        return { 
+          ...state, players: state.players.map((player) => {
+            return { ...player, scores: [action.payload] };
+          }) 
+        };
       case 'SET_GAME_TYPE':
         return { ...state, gameType: action.payload };
       case 'SET_SET_SIZE':
@@ -39,6 +54,8 @@ const reducer = (state, action) => {
         return { ...state, currentLeg: action.payload };
       case 'SET_CURRENT_PLAYER':
         return { ...state, currentPlayer: action.payload };
+      case 'SET_LEGS':
+        return { ...state, Legs: [...state.Legs, action.payload] };
       default:
         return state;
     }
