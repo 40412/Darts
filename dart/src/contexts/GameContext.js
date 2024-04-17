@@ -31,7 +31,7 @@ const reducer = (state, action) => {
       case 'UPDATE_SCORES':
         return { 
           ...state, players: state.players.map((player) => {
-            if (player.name === state.currentPlayer.name) {
+            if (player.name === action.currentPlayer.name) {
               return { 
                 ...player, 
                 scores: [...player.scores, player.scores[player.scores.length - 1] - action.payload] 
