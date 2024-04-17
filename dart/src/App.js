@@ -1,7 +1,9 @@
 import './App.css';
-import { ScoreTable } from './components/points';
+import { ScoreTable } from './components/ScoreTable.js';
 import { AppStateContext } from './contexts/AppStateContext';
 import { React, useState } from 'react';
+import { GameProvider } from './contexts/GameContext.js';
+import { GameInfo } from './components/Gameinfo.js';
 
 function App() {
   
@@ -19,7 +21,8 @@ function App() {
     <h1>
     Welcome to Darts!
     </h1>
-    <AppStateContext.Provider value={{appState}}>
+    <AppStateContext.Provider value={{appState, setAppState}}>
+    <GameProvider>
     {appState === 'initial state' && (
     <div style={{ display: 'flex', justifyContent: 'center', alignItems: 
           'center', height: '100vh' }}>
@@ -28,9 +31,13 @@ function App() {
     </div>
     )}
     {appState === 'game' && (
-    <div style={{ display: 'flex', justifyContent: 'center', alignItems: 
-          'center', height: '100vh' }}>
-      <ScoreTable />
+    <div style={{ display: 'flex', flexDirection: 'column', 
+                justifyContent: 'center', alignItems: 'center' }}>
+        
+          <GameInfo />
+          <ScoreTable />
+        
+        
     </div>
     )}
     {appState === 'summary' && (
@@ -41,6 +48,7 @@ function App() {
       <p>Winner, legs, something here</p>
     </div>
     )}
+    </GameProvider>
     </AppStateContext.Provider>
   </div>
   );
