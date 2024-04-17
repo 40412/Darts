@@ -2,13 +2,14 @@ import React, { useReducer, createContext } from 'react';
 
 // Define the initial state
 const initialState = {
-  players: [{name: 'Kale', scores: [301], wonLegs: 0}, 
-            {name: 'Keijo', scores: [301], wonLegs: 0}],
+  players: [{name: 'Kale', wonLegs: 0}, 
+            {name: 'Keijo', wonLegs: 0}],
   gameType: 301,
   setSize: 5,
   currentLeg: 1,
-  currentPlayer: {name: 'Kale', scores: [301], wonLegs: 0},
+  firstPlayer: {name: 'Kale', scores: [301], wonLegs: 0},
   Legs: [],
+  winner: ''
 };
 
 // Define the context
@@ -28,32 +29,14 @@ const reducer = (state, action) => {
             return player;
           }) 
         };
-      case 'UPDATE_SCORES':
-        return { 
-          ...state, players: state.players.map((player) => {
-            if (player.name === action.currentPlayer.name) {
-              return { 
-                ...player, 
-                scores: [...player.scores, player.scores[player.scores.length - 1] - action.payload] 
-              };
-            }
-            return player;
-          }) 
-        };
-      case 'RESET_SCORES':
-        return { 
-          ...state, players: state.players.map((player) => {
-            return { ...player, scores: [action.payload] };
-          }) 
-        };
       case 'SET_GAME_TYPE':
         return { ...state, gameType: action.payload };
       case 'SET_SET_SIZE':
         return { ...state, setSize: action.payload };
       case 'SET_CURRENT_LEG':
         return { ...state, currentLeg: action.payload };
-      case 'SET_CURRENT_PLAYER':
-        return { ...state, currentPlayer: action.payload };
+      case 'SET_FIRST_PLAYER':
+        return { ...state, firstPlayer: action.payload };
       case 'SET_LEGS':
         return { ...state, Legs: [...state.Legs, action.payload] };
       default:

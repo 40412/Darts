@@ -4,11 +4,13 @@ import { AppStateContext } from '../contexts/AppStateContext';
 
 const ScoreTable = () => {
 
+  const [buttonValue, setButtonValue] = useState('Start next leg');
+
   const { setAppState } = useContext(AppStateContext);
   const { state, dispatch } = useContext(GameContext);
 
   const [legEnd, setLegEnd] = useState(false);
-  const [currentPlayer, setCurrentPlayer] = useState(state.currentPlayer);
+  const [currentPlayer, setCurrentPlayer] = useState(state.firstPlayer);
 
   const player1 = state.players[0];
   const player2 = state.players[1];
@@ -16,10 +18,11 @@ const ScoreTable = () => {
   const [p1Scores, setP1Scores] = useState([state.gameType]);
   const [p2Scores, setP2Scores] = useState([state.gameType]);
 
-  let score = currentPlayer.scores[currentPlayer.scores.length - 1];
+  // Checks the current player and sets the score to the last score of the player
+  let score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
 
   const legOver = () => {
-    setLegEnd(true);
+    
     dispatch({ type: 'SET_WON_LEGS', payload: currentPlayer.name });
     dispatch({
       type: 'SET_LEGS', payload: {
@@ -28,6 +31,11 @@ const ScoreTable = () => {
         scores: { player1: p1Scores, player2: p2Scores }
       }
     });
+    // Check if the game is won by one of the players and change the button value
+    if (currentPlayer.wonLegs + 1 > (state.setSize / 2)) {
+      setButtonValue('To Summary');
+    }
+    setLegEnd(true);
     window.alert(`Leg won by ${currentPlayer.name}`);
   }
 
@@ -38,7 +46,6 @@ const ScoreTable = () => {
     setP2Scores([state.gameType]);
 
     if (newWonLegs < (state.setSize / 2)) {
-      dispatch({ type: 'RESET_SCORES', payload: state.gameType });
       dispatch({ type: 'SET_CURRENT_LEG', payload: state.currentLeg + 1 })
     } else {
       setAppState('summary');
@@ -50,27 +57,24 @@ const ScoreTable = () => {
   const addPoints = () => {
 
     let points = document.getElementById('points').value;
-    score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length -1] : p2Scores[p2Scores.length -1];
+    score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
     const nextPoints = score - points;
 
     if (nextPoints < 2 && nextPoints !== 0) {
       points = 0;
     }
 
-    //dispatch({ type: 'UPDATE_SCORES', payload: points, currentPlayer });
     if (currentPlayer.name === player1.name) {
       p1Scores.push(nextPoints);
     } else {
       p2Scores.push(nextPoints);
     }
-  
 
     if (nextPoints === 0) {
       legOver();
     } else {
       setCurrentPlayer(currentPlayer.name === player1.name ? player2 : player1);
     }
-    //dispatch({ type: 'SET_CURRENT_PLAYER', payload: state.currentPlayer.name === player1.name ? player2 : player1 });
     document.getElementById('points').value = '';
   }
   return (
@@ -80,7 +84,7 @@ const ScoreTable = () => {
         <div style={{ padding: 20 }}>
           <input type="number" id='points' placeholder="Enter points" />
           {legEnd || <button onClick={() => addPoints()}>Add Points</button>}
-          {legEnd && <button onClick={() => startNewLeg()}>Start next leg</button>}
+          {legEnd && <button id='newLeg' onClick={() => startNewLeg()}>{ buttonValue }</button>}
         </div>
         <div style={{ display: 'flex', flexDirection: 'row', margin: 10 }}>
           <div style={{ padding: 20 }}>
