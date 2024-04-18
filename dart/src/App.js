@@ -17,9 +17,11 @@ function App() {
         Welcome to Darts!
       </h1>
       <AppStateProvider>
+        <GameProvider>
       <GameSetup />
       <Game />
       <Summary />
+      </GameProvider>
       </AppStateProvider>
     </div >
   );

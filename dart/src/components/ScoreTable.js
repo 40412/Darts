@@ -26,7 +26,7 @@ const ScoreTable = () => {
     dispatch({ type: 'SET_WON_LEGS', payload: currentPlayer.name });
     dispatch({
       type: 'SET_LEGS', payload: {
-        Leg: state.currentLeg,
+        leg: state.currentLeg,
         winner: currentPlayer.name,
         scores: { player1: p1Scores, player2: p2Scores }
       }

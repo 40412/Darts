@@ -13,10 +13,10 @@ export const Game = () => {
                     display: 'flex', flexDirection: 'column',
                     justifyContent: 'center', alignItems: 'center'
                 }}>
-                    <GameProvider>
+                    
                         <GameInfo />
                         <ScoreTable />
-                    </GameProvider>
+                    
 
                 </div>
             )}
