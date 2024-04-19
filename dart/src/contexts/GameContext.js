@@ -44,7 +44,7 @@ const reducer = (state, action) => {
     }
   };
 
-  // Define the context provider
+// Define the context provider
 export const GameProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
   

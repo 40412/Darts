@@ -1,7 +1,7 @@
 import { GameContext } from "../contexts/GameContext";
 import { useContext } from "react";
 
-const GameInfo = () => {
+export const GameInfo = () => {
     const { state } = useContext(GameContext);
     return (
         <div style={{ padding: 20 }}>
@@ -13,5 +13,3 @@ const GameInfo = () => {
         
     );
 }
-
-export { GameInfo };
