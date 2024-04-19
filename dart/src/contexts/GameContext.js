@@ -39,6 +39,16 @@ const reducer = (state, action) => {
         return { ...state, firstPlayer: action.payload };
       case 'SET_LEGS':
         return { ...state, Legs: [...state.Legs, action.payload] };
+      case 'UPDATE_PLAYER_NAME':
+      return {
+        ...state,
+        players: state.players.map((player, index) => {
+          if (index === action.payload.index) {
+            return { ...player, name: action.payload.newName };
+          }
+          return player;
+        })
+      };
       default:
         return state;
     }
