@@ -58,10 +58,11 @@ const ScoreTable = () => {
 
     let points = document.getElementById('points').value;
     score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
-    const nextPoints = score - points;
+    let nextPoints = score - points;
+    console.log(nextPoints);
 
     if (nextPoints < 2 && nextPoints !== 0) {
-      points = 0;
+      nextPoints = score;
     }
 
     if (currentPlayer.name === player1.name) {
