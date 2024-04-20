@@ -3,26 +3,18 @@ import { GameContext } from '../contexts/GameContext';
 import { AppStateContext } from '../contexts/AppStateContext';
 
 const ScoreTable = () => {
-
   const [buttonValue, setButtonValue] = useState('Start next leg');
-
   const { setAppState } = useContext(AppStateContext);
   const { state, dispatch } = useContext(GameContext);
-
   const [legEnd, setLegEnd] = useState(false);
   const [currentPlayer, setCurrentPlayer] = useState(state.firstPlayer);
-
   const player1 = state.players[0];
   const player2 = state.players[1];
-
   const [p1Scores, setP1Scores] = useState([state.gameType]);
   const [p2Scores, setP2Scores] = useState([state.gameType]);
-
-  // Checks the current player and sets the score to the last score of the player
   let score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
 
   const legOver = () => {
-    
     dispatch({ type: 'SET_WON_LEGS', payload: currentPlayer.name });
     dispatch({
       type: 'SET_LEGS', payload: {
@@ -31,7 +23,6 @@ const ScoreTable = () => {
         scores: { player1: p1Scores, player2: p2Scores }
       }
     });
-    // Check if the game is won by one of the players and change the button value
     if (currentPlayer.wonLegs + 1 > (state.setSize / 2)) {
       setButtonValue('To Summary');
     }
@@ -55,7 +46,6 @@ const ScoreTable = () => {
   }
 
   const addPoints = () => {
-
     let points = document.getElementById('points').value;
     score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
     let nextPoints = score - points;
@@ -78,30 +68,39 @@ const ScoreTable = () => {
     }
     document.getElementById('points').value = '';
   }
+
   return (
     <>
       <div style={{ display: 'flex', flexDirection: 'column', margin: 10 }}>
-        <label htmlFor='points'>Enter points for player: {currentPlayer.name}</label>
-        <div style={{ padding: 20 }}>
-          <input type="number" id='points' placeholder="Enter points" />
-          {legEnd || <button onClick={() => addPoints()}>Add Points</button>}
-          {legEnd && <button id='newLeg' onClick={() => startNewLeg()}>{ buttonValue }</button>}
-        </div>
-        <div style={{ display: 'flex', flexDirection: 'row', margin: 10 }}>
+        {!legEnd && (
+          <>
+            <label htmlFor='points'>Enter points for player: {currentPlayer.name}</label>
+            <div style={{ padding: 20 }}>
+              <input type="number" id='points' placeholder="Enter points" />
+              <button onClick={() => addPoints()}>Add Points</button>
+            </div>
+          </>
+        )}
+        {legEnd && (
           <div style={{ padding: 20 }}>
-            <h2>{state.players[0].name}</h2>
-            <ul>
-              {p1Scores.map((points, index) => (
-                <p key={index}>{points}</p>
-              ))}
-            </ul>
+            <button id='newLeg' onClick={() => startNewLeg()}>{buttonValue}</button>
           </div>
-          <div style={{ padding: 20 }}>
-            <h2>{player2.name}</h2>
-            {p2Scores.map((points, index) => (
+        )}
+      </div>
+      <div style={{ display: 'flex', flexDirection: 'row', margin: 10 }}>
+        <div style={{ padding: 20 }}>
+          <h2>{player1.name}</h2>
+          <ul>
+            {p1Scores.map((points, index) => (
               <p key={index}>{points}</p>
             ))}
-          </div>
+          </ul>
+        </div>
+        <div style={{ padding: 20 }}>
+          <h2>{player2.name}</h2>
+          {p2Scores.map((points, index) => (
+            <p key={index}>{points}</p>
+          ))}
         </div>
       </div>
     </>

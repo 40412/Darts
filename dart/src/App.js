@@ -13,9 +13,7 @@ function App() {
 
   return (
     <div className="App">
-      <h1>
-        Welcome to Darts!
-      </h1>
+    
       <AppStateProvider>
         <GameProvider>
       <GameSetup />

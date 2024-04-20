@@ -2,7 +2,8 @@ import React, { useContext } from 'react';
 import { AppStateContext } from '../contexts/AppStateContext';
 
 export const Summary = () => {
-    const { appState } = useContext(AppStateContext);
+    const { appState, winner, legsPlayed } = useContext(AppStateContext);
+
     return (
         <>
             {appState === 'summary' && (
@@ -11,8 +12,9 @@ export const Summary = () => {
                         'center', height: '100vh'
                 }}>
                     {/* Render additional components for 'summary' */}
-                    <h2>Summary of the game here</h2>
-                    <p>Winner, legs, something here</p>
+                    <h2>Congratulations!</h2>
+                    <p>Winner: {winner}</p>
+                    <p>Legs played: {legsPlayed}</p>
                 </div>
             )}
         </>
