@@ -2,12 +2,12 @@ import React, { useReducer, createContext } from 'react';
 
 // Define the initial state
 const initialState = {
-  players: [{name: 'Kale', wonLegs: 0}, 
-            {name: 'Keijo', wonLegs: 0}],
+  players: [{name: '', wonLegs: 0}, 
+            {name: '', wonLegs: 0}],
   gameType: 301,
   setSize: 5,
   currentLeg: 1,
-  firstPlayer: {name: 'Kale', scores: [301], wonLegs: 0},
+  firstPlayer: '',
   Legs: [],
   winner: ''
 };
