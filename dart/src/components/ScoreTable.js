@@ -15,6 +15,8 @@ const ScoreTable = () => {
   let score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
 
   const legOver = () => {
+    let nextFirstPlayer = state.firstPlayer.name === player1.name ? player2 : player1;
+    dispatch({ type: 'SET_FIRST_PLAYER', payload: nextFirstPlayer });
     dispatch({ type: 'SET_WON_LEGS', payload: currentPlayer.name });
     dispatch({
       type: 'SET_LEGS', payload: {
@@ -42,14 +44,13 @@ const ScoreTable = () => {
       setAppState('summary');
     }
     setLegEnd(false);
-    setCurrentPlayer(currentPlayer.name === player1.name ? player2 : player1);
+    setCurrentPlayer(state.firstPlayer.name === player1.name ? player1 : player2);
   }
 
   const addPoints = () => {
     let points = document.getElementById('points').value;
     score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
     let nextPoints = score - points;
-    console.log(nextPoints);
 
     if (nextPoints < 2 && nextPoints !== 0) {
       nextPoints = score;
