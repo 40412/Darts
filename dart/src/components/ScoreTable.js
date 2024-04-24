@@ -12,7 +12,15 @@ const ScoreTable = () => {
   const player2 = state.players[1];
   const [p1Scores, setP1Scores] = useState([state.gameType]);
   const [p2Scores, setP2Scores] = useState([state.gameType]);
+  let pScores = p1Scores.length >= p2Scores.length ? p1Scores : p2Scores;
   let score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
+
+  const inputListener = (e) => {
+    if (e.key === 'Enter') {
+      e.preventDefault();
+      document.getElementById('addButton').click();
+    }
+  }
 
   const legOver = () => {
     let nextFirstPlayer = state.firstPlayer.name === player1.name ? player2 : player1;
@@ -72,13 +80,13 @@ const ScoreTable = () => {
 
   return (
     <>
-      <div style={{ display: 'flex', flexDirection: 'column', margin: 10 }}>
+      <div style={{ margin: 10 }}>
         {!legEnd && (
           <>
             <label htmlFor='points'>Enter points for player: {currentPlayer.name}</label>
             <div style={{ padding: 20 }}>
-              <input type="number" id='points' placeholder="Enter points" />
-              <button onClick={() => addPoints()}>Add Points</button>
+              <input type="number" id='points' placeholder="Enter points" onKeyUp={inputListener} min="0" max="180" maxlength="3" />
+              <button id='addButton' onClick={() => addPoints()}>Add Points</button>
             </div>
           </>
         )}
@@ -88,21 +96,27 @@ const ScoreTable = () => {
           </div>
         )}
       </div>
-      <div style={{ display: 'flex', flexDirection: 'row', margin: 10 }}>
-        <div style={{ padding: 20 }}>
-          <h2>{player1.name}</h2>
-          <ul>
-            {p1Scores.map((points, index) => (
-              <p key={index}>{points}</p>
+      <div>
+        <table className='ScoreTable'>
+          <thead>
+            <tr>
+              <th></th>
+              <th>{player1.name}</th>
+              <th>{player2.name}</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {pScores.map((points, index) => (
+              <tr key={index}>
+                <td className='Points'>{p1Scores[index - 1] - p1Scores[index] || 0}</td>
+                <td style={{ fontSize: 18 }}>{p1Scores[index]}</td>
+                <td style={{ fontSize: 18 }}>{p2Scores[index]}</td>
+                <td className='Points'>{p2Scores[index - 1] - p2Scores[index] || 0}</td>
+              </tr>
             ))}
-          </ul>
-        </div>
-        <div style={{ padding: 20 }}>
-          <h2>{player2.name}</h2>
-          {p2Scores.map((points, index) => (
-            <p key={index}>{points}</p>
-          ))}
-        </div>
+          </tbody>
+        </table>
       </div>
     </>
   );
