@@ -11,6 +11,7 @@ export const Summary = () => {
                     display: 'flex', justifyContent: 'center', flexDirection: 'column', alignItems:
                         'center', height: '100vh'
                 }}>
+
                     {/* Render additional components for 'summary' */}
                     <h2>Congratulations!</h2>
                     <p>Winner: {winner}</p>
