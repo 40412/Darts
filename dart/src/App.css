@@ -2,37 +2,50 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+button {
+  background-color: #e88463;
+  color: #fff;
+  padding: 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 18px;
+  transition: background-color 0.3s ease;
+  margin: 20px;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
+button:hover {
+  transform: translateY(-5px);
+  transition: transform 0.3s ease;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.3);
 }
 
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+.ScoreTable {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 10px;
+  background-color: #552e23;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+  color: #fff;
 }
 
-.App-link {
-  color: #61dafb;
+.ScoreTable th {
+  background-color: #e5714e;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+.ScoreTable td {
+  padding: 10px;
+  border: 1px solid #fff;
+}
+
+.Points {
+  font-size: 0.8em;
+  color: gray;
+}
+
+.Game {
+  max-height: 100vh;
+  overflow-y: auto;
+  padding-right: 40vw;
+  padding-left: 40vw;
 }

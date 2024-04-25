@@ -39,6 +39,10 @@ const reducer = (state, action) => {
         return { ...state, firstPlayer: action.payload };
       case 'SET_LEGS':
         return { ...state, Legs: [...state.Legs, action.payload] };
+      case 'SET_WINNER':
+        return { ...state, winner: action.payload };
+      case 'RESET_STATE':
+        return initialState;
       case 'UPDATE_PLAYER_NAME':
       return {
         ...state,
@@ -57,9 +61,10 @@ const reducer = (state, action) => {
 // Define the context provider
 export const GameProvider = ({ children }) => {
     const [state, dispatch] = useReducer(reducer, initialState);
+    const reset = () => dispatch({ type: 'RESET_STATE' });
   
     return (
-      <GameContext.Provider value={{ state, dispatch }}>
+      <GameContext.Provider value={{ state, dispatch, reset }}>
         {children}
       </GameContext.Provider>
     );
