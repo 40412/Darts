@@ -58,6 +58,10 @@ const ScoreTable = () => {
 
   const addPoints = () => {
     let points = document.getElementById('points').value;
+    if (points < 0 || points > 180) {
+      alert('point can not be negative or greater than 180');
+      return;
+    } 
     score = currentPlayer.name === player1.name ? p1Scores[p1Scores.length - 1] : p2Scores[p2Scores.length - 1];
     let nextPoints = score - points;
 
@@ -86,7 +90,7 @@ const ScoreTable = () => {
           <>
             <label htmlFor='points'>Enter points for player: {currentPlayer.name}</label>
             <div style={{ padding: 20 }}>
-              <input type="number" id='points' placeholder="Enter points" onKeyUp={inputListener} min="0" max="180" maxLength="3" />
+              <input type="number" id='points' placeholder="Enter points" onKeyUp={inputListener} min="0" max="180" />
               <button id='addButton' onClick={() => addPoints()}>Add Points</button>
             </div>
           </>
