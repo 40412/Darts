@@ -71,7 +71,27 @@ const ScoreTable = () => {
       setCurrentPlayer(currentPlayer.name === player1.name ? player2 : player1);
     }
     document.getElementById('points').value = '';
-  }
+  };
+
+  const removePoints = () => {
+    // Determine the current player for removing
+    let currentPlayerScores = currentPlayer.name === player1.name ? p2Scores : p1Scores;
+
+    // Remove the last score from the scores array
+    if (currentPlayerScores.length > 1) {
+      currentPlayerScores.pop();
+
+      // Update the state with the modified scores
+      if (currentPlayer.name === player1.name) {
+        setP2Scores([...currentPlayerScores]);
+      } else {
+        setP1Scores([...currentPlayerScores]);
+      }
+      
+      setCurrentPlayer(currentPlayer.name === player1.name ? player2 : player1);
+    }
+    
+  };
 
   return (
     <>
@@ -82,6 +102,7 @@ const ScoreTable = () => {
             <div style={{ padding: 20 }}>
               <input type="number" id='points' placeholder="Enter points" min="0" max="180"/>
               <button onClick={() => addPoints()}>Add Points</button>
+              <button onClick={() => removePoints()}>Remove Last Point</button>
             </div>
           </>
         )}
@@ -91,6 +112,7 @@ const ScoreTable = () => {
           </div>
         )}
       </div>
+
       <div style={{ display: 'flex', flexDirection: 'row', margin: 10 }}>
         <div style={{ padding: 20 }}>
           <h2>{player1.name}</h2>
