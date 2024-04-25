@@ -34,6 +34,7 @@ const ScoreTable = () => {
       }
     });
     if (currentPlayer.wonLegs + 1 > (state.setSize / 2)) {
+      dispatch({ type: 'SET_WINNER', payload: currentPlayer.name });
       setButtonValue('To Summary');
     }
     setLegEnd(true);
@@ -85,7 +86,7 @@ const ScoreTable = () => {
           <>
             <label htmlFor='points'>Enter points for player: {currentPlayer.name}</label>
             <div style={{ padding: 20 }}>
-              <input type="number" id='points' placeholder="Enter points" onKeyUp={inputListener} min="0" max="180" maxlength="3" />
+              <input type="number" id='points' placeholder="Enter points" onKeyUp={inputListener} min="0" max="180" maxLength="3" />
               <button id='addButton' onClick={() => addPoints()}>Add Points</button>
             </div>
           </>
