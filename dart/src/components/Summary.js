@@ -26,6 +26,7 @@ export const Summary = () => {
     return (
         <>
             {appState === 'summary' && (
+
                 <div>
                     <h2>Congratulations!</h2>
                     <p>Winner of this game is {state.winner}!</p>
